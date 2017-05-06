@@ -3,5 +3,10 @@
 <%=image_tag src="#{recipe["image"]}"%>
 <% uri = @search_object[key-1]["uri"]%>
 <% from = @search_object[key-1]["from"]["from"]%>
-<%=link_to recipe["label"], searches_path( key, "uri" => uri["r"], "from"=> from) %>
+<%=link_to recipe["label"], search_path( key, "uri" => uri["r"], "from"=> from) %>
 <%end%>
+
+<%from = @search.from.to_i + 10%>
+<% query = params[:query]%>
+
+<%=link_to ">>", searches_path( "query"=> query, "from"=> from) %>
