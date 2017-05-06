@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
  root to:'search#welcome', to:'search#welcome'
 
-  get 'search', to: 'search#index', as:'search'
+  get 'search', to: 'search#index', as:'searches'
 
-  get 'searches/:item/', to: 'search#show', as: 'searches'
+  get 'searches/:item/', to: 'search#show', as: 'search'
 
   # post 'search/:query/send_search', to:'search#send_search', as:'send_search'
 
