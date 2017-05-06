@@ -1,0 +1,6 @@
+<%@searches.each do |key, recipe|%>
+<%=image_tag src="#{recipe["image"]}"%>
+<% uri = @search_object[key-1]["uri"]%>
+<% from = @search_object[key-1]["from"]["from"]%>
+<%=link_to recipe["label"], searches_path( key, "uri" => uri["r"], "from"=> from) %>
+<%end%>
