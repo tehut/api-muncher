@@ -16,4 +16,30 @@
     <%end%>
   </table>
 </section>
-<%=en%>
+
+<section class="nutrition">
+
+    <table>
+      <th>
+
+          <% servings = @search[0]["yield"].to_i%>
+          Serves: <%= servings%>
+        </th>
+        <th>
+          <% cal = @search[0]["calories"].to_i%>
+          <%= cal/servings%> calories per serving
+        </th>
+
+      <%@search[0]["digest"].each do |item|%>
+      <tr>
+        <td>
+          <%=item["label"]%>
+        </td>
+        <td>
+          <%value = item["total"].to_i%>
+          <%=value/servings%> g
+        </td>
+      </tr>
+      <%end%>
+  </table>
+</section>
