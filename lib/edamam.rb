@@ -55,12 +55,17 @@ class Edamam
   end
 
   def clean(response)
+    if response.length > 1
     hash = {}
 
     response["hits"].each_with_index do |item, i|
       hash[i+1] = item["recipe"]
     end
     return hash
+
+  else
+    flash[:message] = "Your search could not be executed"
+    return flash[:message]
   end
 
   def single_lookup(r,from)
