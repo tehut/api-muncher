@@ -67,6 +67,8 @@ class Edamam
     flash[:message] = "Your search could not be executed"
     return flash[:message]
   end
+  
+  end
 
   def single_lookup(r,from)
 
