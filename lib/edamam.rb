@@ -18,12 +18,14 @@ class Edamam
 
 
 
-  def lookup(query)
+  def all(query, from = 0)
     url = "#{BASE_URL}search?"
     query_params = {
       "app_key" => ENV["API_KEY"],
       "app_id"=>  ENV["API_ID"],
-      "q" => query
+      "q" => query,
+      "from" => from,
+      "to" => from.to_i + 10
     }
 
     response = HTTParty.get(url, query:query_params).parsed_response
@@ -35,32 +37,25 @@ class Edamam
     elsif response["count"] == 0
       puts "Your search returned no results"
     else
-      puts "Uhoh, there was an error! #{response}"
+      flash[:message] = "Uhoh, there was an error! #{response}"
       raise EdamamException.new(response["error"])
     end
 
 
-
+#Create an array object to hold all of the hits
     @hits.each do |number, recipe|
       @hit_array << (number = Hash.new(
 
       "r" => recipe["uri"],
       "from" => self.from
+        )
       )
-      )
-
-
     end
 
   end
 
   def clean(response)
-    puts response.inspect
-
     if response["hits"].present?
-      puts response["hits"]
-      puts response.inspect
-
       hash = {}
       response["hits"].each_with_index do |item, i|
         hash[i+1] = item["recipe"]
@@ -74,7 +69,7 @@ class Edamam
 
   end
 
-  def single_lookup(r,from)
+  def find(r,from)
 
     url = "#{BASE_URL}search?"
     query_params = {
