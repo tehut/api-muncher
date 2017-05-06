@@ -1,2 +1,19 @@
-<%=@search%>
-<%= raise%>
+<%@search%>
+<%@search[0]%>
+<section class = "title">
+  <h1><%=@search[0]["label"]%></h1>
+  <h3> Source: <%=link_to @search[0]["source"], (@search[0]["url"])%></h3>
+</section>
+<section class = "image">
+  <%=image_tag src=@search[0]["image"]%>
+</section>
+<section class= "ingredients">
+  <table>
+    <%@search[0]["ingredientLines"].each do |line|%>
+    <tr>
+      <td><%=line%></td>
+    </tr>
+    <%end%>
+  </table>
+</section>
+<%=en%>
