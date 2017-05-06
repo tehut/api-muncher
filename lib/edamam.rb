@@ -46,7 +46,7 @@ class Edamam
 
       "r" => recipe["uri"],
       "from" => self.from
-        )
+      )
       )
 
 
@@ -55,19 +55,23 @@ class Edamam
   end
 
   def clean(response)
-    if response.length > 1
-    hash = {}
+    puts response.inspect
 
-    response["hits"].each_with_index do |item, i|
-      hash[i+1] = item["recipe"]
+    if response["hits"].present?
+      puts response["hits"]
+      puts response.inspect
+
+      hash = {}
+      response["hits"].each_with_index do |item, i|
+        hash[i+1] = item["recipe"]
+      end
+      return hash
+
+    else
+      flash[:message] = "Your search could not be executed"
+      return flash[:message]
     end
-    return hash
 
-  else
-    flash[:message] = "Your search could not be executed"
-    return flash[:message]
-  end
-  
   end
 
   def single_lookup(r,from)
@@ -78,7 +82,7 @@ class Edamam
       "from" => from
     }
     response = HTTParty.get(url, query:query_params).parsed_response
-  return response
+    return response
   end
 
 
