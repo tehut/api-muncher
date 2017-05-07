@@ -37,7 +37,7 @@ class Edamam
     elsif response["count"] == 0
       puts "Your search returned no results"
     else
-      flash[:message] = "Uhoh, there was an error! #{response}"
+     puts "Uhoh, there was an error! #{response}"
       raise EdamamException.new(response["error"])
     end
 
@@ -63,8 +63,8 @@ class Edamam
       return hash
 
     else
-      flash[:message] = "Your search could not be executed"
-      return flash[:message]
+      puts = "Your search could not be executed"
+      raise EdamamException.new("Your search could not be executed")
     end
 
   end
