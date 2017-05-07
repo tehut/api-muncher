@@ -12,6 +12,13 @@
   </head>
 
   <body>
+    <header>
+      <%if flash%>
+      <%flash.each do |message|%>
+      <%=message%><br>
+      <%end%>
+      <%end%>
+    </header>
 
     <%= yield %>
 
