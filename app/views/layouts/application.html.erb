@@ -14,9 +14,9 @@
   <body>
     <header>
       <%if flash%>
-      <%flash.each do |message|%>
-      <%=message%><br>
-      <%end%>
+
+      <%=flash[:message]%><br>
+
       <%end%>
     </header>
 
