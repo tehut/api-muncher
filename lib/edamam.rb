@@ -37,16 +37,6 @@ class Edamam
 
 
 #Create an array object to hold all of the hits
-def make_hit_array
-    @hits.each do |number, recipe|
-     number = Hash.new
-     number["r"] = recipe["uri"]
-     number["from"] = self.from
-     @hit_array << number
-
-
-    end
-  end
 
 
     if response["count"] > 1
@@ -56,14 +46,20 @@ def make_hit_array
     end
   end
 
+  def make_hit_array
+    @hits.each do |number, recipe|
+      number = Hash.new
+      number["r"] = recipe["uri"]
+      number["from"] = self.from
+      @hit_array << number
+    end
+  end
+
   def clean(response)
     if response["hits"].present?
       hash = {}
-      response["hits"].each_with_index do |item, i|
-        hash[i] = item["recipe"]
-      end
+      response["hits"].each_with_index{|item, i|hash[i] = item["recipe"]}
       return hash
-
     else
       puts = "Your search could not be executed"
       raise EdamamException.new("Your search could not be executed")
