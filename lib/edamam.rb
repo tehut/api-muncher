@@ -8,12 +8,14 @@ class Edamam
   class EdamamException <  StandardError
   end
 
-  attr_reader :recipe_uri, :from, :hit_array
+  attr_reader :recipe_uri, :from, :hit_array, :hits
 
-  def initialize(uri = "", from = 0)
+  def initialize(uri = "", from = "")
     @hit_array = []
     @recipe_uri = uri
     @from = from
+    @hits = ""
+
   end
 
 
@@ -26,39 +28,39 @@ class Edamam
       "q" => query,
       "from" => from,
       "to" => from.to_i + 10
-    }
+}
 
     response = HTTParty.get(url, query:query_params).parsed_response
     @hits = self.clean(response)
     @from = response["from"]
-
-    if response["count"] > 0
-      puts "everythings awesome"
-    elsif response["count"] == 0
-      puts "Your search returned no results"
-    else
-     puts "Uhoh, there was an error! #{response}"
-      raise EdamamException.new(response["error"])
-    end
+    @hit_array = make_hit_array
 
 
 #Create an array object to hold all of the hits
+def make_hit_array
     @hits.each do |number, recipe|
-      @hit_array << (number = Hash.new(
+     number = Hash.new
+     number["r"] = recipe["uri"]
+     number["from"] = self.from
+     @hit_array << number
 
-      "r" => recipe["uri"],
-      "from" => self.from
-        )
-      )
+
     end
+  end
 
+
+    if response["count"] > 1
+    return response
+    else
+      raise EdamamException.new("Your search returned no results")
+    end
   end
 
   def clean(response)
     if response["hits"].present?
       hash = {}
       response["hits"].each_with_index do |item, i|
-        hash[i+1] = item["recipe"]
+        hash[i] = item["recipe"]
       end
       return hash
 
@@ -70,9 +72,10 @@ class Edamam
   end
 
   def find(r,from)
-
     url = "#{BASE_URL}search?"
     query_params = {
+      "app_key" => ENV["API_KEY"],
+      "app_id"=>  ENV["API_ID"],
       "r" => r,
       "from" => from
     }
