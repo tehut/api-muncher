@@ -4,8 +4,10 @@ class SearchController < ApplicationController
 
   def index
     @search =Edamam.new
+
     begin
-      @searches = @search.all(params[:query], params[:from])
+      @search.all(params[:query], params[:from])
+      @searches = @search.hits
       @search_object = @search.hit_array
     rescue Edamam::EdamamException
     flash[:message] = "Your search returned no results"
