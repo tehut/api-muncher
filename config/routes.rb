@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
- root to:'search#welcome', to:'search#welcome'
+ root 'search#welcome', to:'search#welcome'
 
   get 'search', to: 'search#index', as:'searches'
 
