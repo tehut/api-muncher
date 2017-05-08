@@ -1,3 +1,13 @@
+<% query = params[:query]%>
+<%from = @search.from.to_i + 10%>
+
+<%if @search.from.to_i > 1%>
+<%back = @search.from.to_i - 10%>
+<%=link_to "<<....", searches_path( "query"=> query, "from"=> back) %>
+<%end%>
+
+<%=link_to "....>>", searches_path( "query"=> query, "from"=> from) %>
+
 
 <p>
 <%@searches.each do |key, recipe|%>
@@ -7,7 +17,3 @@
 <% from = @search_object[key.to_i]["from"]%>
 <%=link_to recipe["label"], search_path( key, "uri" => recipe["uri"], "from"=> from) %>
 <%end%>
-
-<%from = @search.from.to_i + 10%>
-<% query = params[:query]%>
-<%=link_to ">>", searches_path( "query"=> query, "from"=> from) %>
