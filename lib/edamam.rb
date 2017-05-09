@@ -27,7 +27,7 @@ class Edamam
       "app_id"=>  ENV["API_ID"],
       "q" => query,
       "from" => from,
-      "to" => from.to_i + 10
+      "to" => from.to_i + 9
 }
 
     response = HTTParty.get(url, query:query_params).parsed_response
