@@ -15,10 +15,12 @@
 <section class="search_results">
 
   <%@searches.each do |key, recipe|%>
+  <section class="columns offset-2">
+  </section>
   <section class= "search_result columns small-12 medium-3 large-4">
 
 
-      <%=link_to recipe["label"], search_path( key, "uri" => recipe["uri"], "from"=> from), class:"index_link" %>
+      <h2><%=link_to recipe["label"], search_path( key, "uri" => recipe["uri"], "from"=> from), class:"index_link" %></h2>
 
   </section>
 
