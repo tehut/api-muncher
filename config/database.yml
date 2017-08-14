@@ -15,15 +15,22 @@
 # gem 'pg', '~> 0.18
 #
 default: &default
-  adapter: postgresql
-  encoding: unicode
-  # For details on connection pooling, see rails configuration guide
-  # http://guides.rubyonrails.org/configuring.html#database-pooling
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  adapter: sqlite3
+  pool: 5
+  timeout: 5000
 
 development:
   <<: *default
-  database: api-muncher_development
+  database: db/development.sqlite3
+# ...
+test:
+  <<: *default
+  database: db/test.sqlite3
+
+production:
+  <<: *default
+  database: db/production.sqlite3
+
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -55,9 +62,9 @@ development:
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
-test:
-  <<: *default
-  database: api-muncher_test
+# test:
+#   <<: *default
+#   database: api-muncher_test
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -78,8 +85,8 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
-production:
-  <<: *default
-  database: api-muncher_production
-  username: api-muncher
-  password: <%= ENV['API-MUNCHER_DATABASE_PASSWORD'] %>
+# production:
+#   <<: *default
+#   database: api-muncher_production
+#   username: api-muncher
+#   password: <%= ENV['API-MUNCHER_DATABASE_PASSWORD'] %>
